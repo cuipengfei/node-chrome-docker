@@ -3,7 +3,6 @@ FROM ubuntu:16.04
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     apt-transport-https \
-    openjdk-8-jre-headless \
     curl \
     xz-utils \
     unzip \
@@ -21,28 +20,8 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-RUN mkdir /data
-
-#==========
-# Selenium
-#==========
-RUN  mkdir -p /opt/selenium \
-  && wget --no-verbose https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar -O /opt/selenium/selenium-server-standalone.jar
-
-#==================
-# Chrome webdriver
-#==================
-ARG CHROME_DRIVER_VERSION=2.29
-RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
-  && rm -rf /opt/selenium/chromedriver \
-  && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
-  && rm /tmp/chromedriver_linux64.zip \
-  && mv /opt/selenium/chromedriver /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
-  && chmod 755 /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
-  && ln -fs /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
-
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.10.2
+ENV NODE_VERSION 8.1.4
 
 #==========
 # NodeJS
