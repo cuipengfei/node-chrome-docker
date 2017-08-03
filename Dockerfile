@@ -31,10 +31,4 @@ RUN curl -SLO https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x
   && rm node-v$NODE_VERSION-linux-x64.tar.xz \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-# Following line fixes
-# https://github.com/SeleniumHQ/docker-selenium/issues/87
-ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
-
-ENTRYPOINT java -jar /opt/selenium/selenium-server-standalone.jar
-
-EXPOSE 4444
+ENTRYPOINT bash
